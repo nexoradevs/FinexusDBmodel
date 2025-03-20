@@ -1,0 +1,48 @@
+FinexUs REST API Endpoints
+
+
+
+🟢 Auth & User APIs
+
+Endpoint	              Method	  Description
+
+/auth/send-otp	  	      POST		  Send OTP to mobile number
+/auth/verify-otp		  POST		  Verify OTP → login if user exists, else signup
+/users/register		      POST		  Create new account (first name, etc.) after OTP verification
+/users/verify-profile	  POST		  Upload ID proof, face photo, UPI ID (KYC Verification)
+/users/live-location	  PUT		  Update user live location
+/users/profile		      PUT		  Update user profile (email, name, security code)
+
+
+🟢 U2C / C2U Request APIs
+
+Endpoint	           	    Method	Description
+
+/requests/u2c        		POST	Create UPI-to-Cash request
+/requests/c2u	        	POST	Create Cash-to-UPI request
+/requests/u2c/:id/cancel	PUT		Cancel UPI-to-Cash request
+/requests/c2u/:id/cancel	PUT		Cancel Cash-to-UPI request
+/requests/nearby	        GET		Get nearby requests within 400 meters
+/requests/u2c/:id/accept	PUT		Accept a UPI-to-Cash request
+/requests/c2u/:id/accept	PUT		Accept a Cash-to-UPI request
+/requests/u2c/:id/decline	PUT		Decline UPI-to-Cash request
+/requests/c2u/:id/decline	PUT		Decline Cash-to-UPI request
+/requests/user        		GET		Get logged-in user’s U2C & C2U requests
+/requests/user/states       GET	    Get the current workflow states of U2C and C2U requests
+
+
+🟢 Chat & Communication APIs
+
+Endpoint	                    Method	  	Description
+
+/chat/:userId		            GET			Get chat history with a user
+/chat/:userId/message		    POST	    Send message (text, audio, media, etc.)
+/chat/:userId/share-location	POST        Share a specific nearest location during chat
+
+
+🟢 Success Rate APIs
+
+Endpoint	                    Method	        Description
+
+/analytics/success-rate/u2c	    GET	                Success rate of U2C exchanges (in %)
+/analytics/success-rate/c2u	    GET	                Success rate of C2U exchanges (in %)
