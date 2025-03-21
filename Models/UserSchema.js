@@ -24,16 +24,6 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  isBlocked: {
-    type: Boolean,
-    default: false
-  },
-  blockReason: { type: String },
-  status: {
-    type: String,
-    enum: ['neutral', 'requested', 'accepted', 'connected', 'processing', 'success'],
-    default: 'neutral'
-  },
   premium: {
     status: {
       type: String,

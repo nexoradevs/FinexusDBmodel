@@ -39,10 +39,6 @@ const ExchangeRequestSchema = new mongoose.Schema({
   securityCode: {
     type: String
   },
-  blockedUsers: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
   createdAt: {
     type: Date,
     default: Date.now
