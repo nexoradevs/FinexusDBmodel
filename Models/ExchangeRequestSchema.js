@@ -20,10 +20,11 @@ const ExchangeRequestSchema = new mongoose.Schema({
   },
   liveLocation: {
     type: {
-      type: String, default: 'Point'
+      type: String,
+      default: 'Point'
     },
     coordinates: {
-      type: [Number], // [longitude, latitude]
+      type: [Number]
     }
   },
   status: {
@@ -38,6 +39,10 @@ const ExchangeRequestSchema = new mongoose.Schema({
   securityCode: {
     type: String
   },
+  blockedUsers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   createdAt: {
     type: Date,
     default: Date.now

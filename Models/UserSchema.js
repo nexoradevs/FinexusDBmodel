@@ -9,24 +9,44 @@ const UserSchema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String },
   email: { type: String },
-  securityCode: { type: String }, // for added security during exchanges
+  securityCode: { type: String },
   profilePicture: { type: String },
   liveLocation: {
     type: {
-      type: String, default: 'Point'
+      type: String,
+      default: 'Point'
     },
     coordinates: {
-      type: [Number], // [longitude, latitude]
+      type: [Number] // [longitude, latitude]
     }
   },
   isProfileVerified: {
     type: Boolean,
     default: false
   },
-  status: { // current user exchange state (optional)
+  isBlocked: {
+    type: Boolean,
+    default: false
+  },
+  blockReason: { type: String },
+  status: {
     type: String,
     enum: ['neutral', 'requested', 'accepted', 'connected', 'processing', 'success'],
     default: 'neutral'
+  },
+  premium: {
+    status: {
+      type: String,
+      enum: ['active', 'expired', 'trial'],
+      default: 'expired'
+    },
+    plan: {
+      type: String,
+      enum: ['monthly', 'yearly', 'none'],
+      default: 'none'
+    },
+    subscribedAt: { type: Date },
+    expiredAt: { type: Date }
   },
   createdAt: {
     type: Date,

@@ -1,48 +1,155 @@
-FinexUs REST API Endpoints
-
-
-
-🟢 Auth & User APIs
-
-Endpoint	              Method	  Description
-
-/auth/send-otp	  	      POST		  Send OTP to mobile number
-/auth/verify-otp		  POST		  Verify OTP → login if user exists, else signup
-/users/register		      POST		  Create new account (first name, etc.) after OTP verification
-/users/verify-profile	  POST		  Upload ID proof, face photo, UPI ID (KYC Verification)
-/users/live-location	  PUT		  Update user live location
-/users/profile		      PUT		  Update user profile (email, name, security code)
-
-
-🟢 U2C / C2U Request APIs
-
-Endpoint	           	    Method	Description
-
-/requests/u2c        		POST	Create UPI-to-Cash request
-/requests/c2u	        	POST	Create Cash-to-UPI request
-/requests/u2c/:id/cancel	PUT		Cancel UPI-to-Cash request
-/requests/c2u/:id/cancel	PUT		Cancel Cash-to-UPI request
-/requests/nearby	        GET		Get nearby requests within 400 meters
-/requests/u2c/:id/accept	PUT		Accept a UPI-to-Cash request
-/requests/c2u/:id/accept	PUT		Accept a Cash-to-UPI request
-/requests/u2c/:id/decline	PUT		Decline UPI-to-Cash request
-/requests/c2u/:id/decline	PUT		Decline Cash-to-UPI request
-/requests/user        		GET		Get logged-in user’s U2C & C2U requests
-/requests/user/states       GET	    Get the current workflow states of U2C and C2U requests
-
-
-🟢 Chat & Communication APIs
-
-Endpoint	                    Method	  	Description
-
-/chat/:userId		            GET			Get chat history with a user
-/chat/:userId/message		    POST	    Send message (text, audio, media, etc.)
-/chat/:userId/share-location	POST        Share a specific nearest location during chat
-
-
-🟢 Success Rate APIs
-
-Endpoint	                    Method	        Description
-
-/analytics/success-rate/u2c	    GET	                Success rate of U2C exchanges (in %)
-/analytics/success-rate/c2u	    GET	                Success rate of C2U exchanges (in %)
+🟢 FinexUs REST API Endpoints (Initial Draft)
+✅ Auth & User APIs
+Total Endpoints: 7
+Endpoint Method Description
+/auth/send-otp POST Send OTP to mobile number
+/auth/verify-otp POST Verify OTP → login if user exists, else signup
+/users/register
+/auth/signout
+POST
+POST
+Create new account after OTP verification
+Sign out user and clear session/token
+/users/verify-pro
+file
+POST Upload ID proof, face photo, UPI ID (KYC Verification)
+/users/live-locat
+ion
+PUT Update user live location
+/users/profile PUT Update user profile (email, name, security code)
+✅ U2C / C2U Request APIs
+Total Endpoints: 18
+Endpoint Method Description
+/requests/u2c POST Create UPI-to-Cash request
+/requests/c2u POST Create Cash-to-UPI request
+/requests/u2c/:id/cancel PUT Cancel UPI-to-Cash request
+/requests/c2u/:id/cancel PUT Cancel Cash-to-UPI request
+/requests/nearby GET Get nearby requests within 400 meters
+/requests/nearby-users GET Get nearby users within 400 meters
+/requests/u2c/:id/accept PUT Accept a UPI-to-Cash request
+/requests/c2u/:id/accept PUT Accept a Cash-to-UPI request
+/requests/u2c/:id/decline PUT Decline UPI-to-Cash request
+/requests/c2u/:id/decline PUT Decline Cash-to-UPI request
+/requests/u2c/:id/user/:use
+rId
+POST Make U2C request to a selected user
+/requests/c2u/:id/user/:use
+rId
+POST Make C2U request to a selected user
+/requests/:id/decline/user/
+:userId
+PUT Decline U2C or C2U request from selected
+user
+/requests/user GET Get logged-in user’s U2C & C2U requests
+/requests/user/states GET Get current workflow states of U2C and
+C2U requests
+/requests/:id/exchange-hist
+ory
+GET Get exchange history for a specific
+exchange ID
+/requests/exchange-history GET Get complete exchange history for
+logged-in user
+/requests/:id/block-user/:u
+serId
+POST Block a user from making further exchange
+requests
+✅ Chat & Communication APIs
+Total Endpoints: 6
+Endpoint Method Description
+/chat/:userId GET Get chat history with a user
+/chat/:userId/message POST Send message (text, audio, media, etc.)
+/chat/:userId/share-locati
+on
+POST Share specific nearest location during chat
+/chat/:userId/notify-payme
+nt-request
+POST Notify user to make UPI payment (when
+exchange state becomes connected)
+/chat/:userId/notify-cash￾exchange-timer
+POST Start 10-minute timer for cash exchange after
+UPI payment confirmation
+/chat/:userId/payment-rece
+ived-verification
+POST Verify cash received and enter security code
+(closes timer & marks success)
+✅ Success Rate & Analytics APIs
+Total Endpoints: 4
+Endpoint Method Description
+/analytics/success-rate/u2
+c
+GET Success rate of UPI-to-Cash exchanges (in
+%)
+/analytics/success-rate/c2
+u
+GET Success rate of Cash-to-UPI exchanges (in
+%)
+/analytics/exchanges/histo
+ry
+GET Full exchange history analytics for user/admin
+/analytics/exchanges/histo
+ry/:id
+GET Specific exchange analytics by exchange ID
+✅ Exchange Lifecycle APIs
+Total Endpoints: 7
+✅ User Management APIs
+Total Endpoints: 3
+Endpoint Method Description
+/users/:userId GET Get user by ID
+Endpoint Method Description
+/exchange/:id/state/connected/
+auto
+PUT Auto-connect users (within 5m) and
+update state to connected
+/exchange/:id/state/connected/
+manual
+PUT Manually connect users after
+verification code validation
+/exchange/:id/state/payment-re
+quest
+POST Notify UPI payer to initiate payment
+(display payment options)
+/exchange/:id/state/payment-co
+nfirm
+POST Confirm UPI payment completed by
+payer
+/exchange/:id/state/cash-excha
+nge-timer
+POST Start 10-minute cash exchange timer
+/exchange/:id/state/cash-recei
+ved-verify
+POST Verify liquid cash received by entering
+security code
+/exchange/:id/state/success PUT Update exchange state to success
+after cash verification
+/users/:userId/bl
+ock
+POST Block user from further exchange requests
+/users/:userId/un
+block
+POST Unblock user (admin or self action)
+✅ Premium Membership APIs
+Endpoint Method Description
+/membership/subscribe/monthl
+y
+POST Subscribe to Monthly Premium (14-day free trial)
+/membership/subscribe/yearly POST Subscribe to Yearly Premium (1-month free trial)
+/membership/status GET Get the current user's membership status
+(Active/Expired/Trial)
+/membership/cancel POST Cancel active premium membership (End
+subscription or trial)
+/membership/history GET Get user's membership subscription history
+(start/end dates, plans)
+📊 Summary of Endpoint Counts
+API Group Count
+Auth & User APIs 7
+U2C / C2U Request APIs 18
+Chat & Communication APIs 6
+Success Rate & Analytics
+APIs
+4
+Exchange Lifecycle APIs 7
+User Management APIs
+Premium membership APIs
+3
+5
+➡️ Total Endpoints: 50

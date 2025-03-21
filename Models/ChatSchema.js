@@ -16,7 +16,7 @@ const ChatSchema = new mongoose.Schema({
       required: true
     },
     content: {
-      type: String // URL for media/audio/location or actual text
+      type: String
     },
     createdAt: {
       type: Date,
